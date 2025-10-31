@@ -1,0 +1,117 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<main class="main-content">
+  <section class="hero hero--gradient">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Deutsch lernen mit Freude</span>
+          <h2 class="hero-title">
+            Entdecke handverlesene Kurzgeschichten f&uuml;r jedes Niveau.
+          </h2>
+          <p class="hero-subtitle">
+            Lies authentische Szenarien, trainiere deinen Wortschatz und sp&uuml;re deinen Fortschritt. Neue Inhalte erscheinen regelm&auml;&szlig;ig &ndash; perfekt f&uuml;r deine t&auml;gliche Lernroutine.
+          </p>
+          <div class="hero-actions">
+            <a href="#stories" class="button button-primary">Jetzt lesen</a>
+            <a href="/about" class="button button-ghost">&Uuml;ber das Projekt</a>
+          </div>
+          <dl class="hero-stats">
+            <div>
+              <dt>Aktive Leser:innen</dt>
+              <dd>1500+</dd>
+            </div>
+            <div>
+              <dt>Verf&uuml;gbare Geschichten</dt>
+              <dd><%= stories.length %></dd>
+            </div>
+            <div>
+              <dt>Niveaustufen</dt>
+              <dd>A1 – C2</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="level-badge level-b1">B1</span>
+            <span class="hero-card-tag">Feature</span>
+          </div>
+          <h3>&bdquo;Der Morgen in M&uuml;nchen&ldquo;</h3>
+          <p>
+            Eine Pendlerin navigiert ihren Weg durch den Trubel der Stadt.
+            Mit Vokabeln f&uuml;r allt&auml;gliche Gespr&auml;che &ndash; ideal zum Nachsprechen.
+          </p>
+          <ul class="hero-card-list">
+            <li>&#128257; Inklusive Verst&auml;ndnisfragen</li>
+            <li>&#128483; Aussprache-Tipps zum Mitsprechen</li>
+            <li>&#128338; Lesedauer: 6 Minuten</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stories-section" id="stories">
+    <div class="container">
+      <% if (isAdmin) { %>
+        <div class="admin-banner">
+          <div>
+            <span class="admin-eyebrow">Redaktion</span>
+            <h3>Teile deine n&auml;chste Geschichte</h3>
+            <p>Als Admin kannst du neue Inhalte direkt ver&ouml;ffentlichen &ndash; inklusive Level, Zusammenfassung und Volltext.</p>
+          </div>
+          <a class="button button-primary" href="/stories/new">
+            Geschichte schreiben
+          </a>
+        </div>
+      <% } %>
+
+      <div class="story-toolbar">
+        <div>
+          <h2 class="section-title">Bibliothek</h2>
+          <p class="section-subtitle">Durchsuche unsere Sammlung nach deinem aktuellen Sprachniveau.</p>
+        </div>
+        <div class="filter-group" role="group" aria-label="Schwierigkeitsstufe filtern">
+          <button class="filter-chip is-active" data-level-filter="all">Alle</button>
+          <button class="filter-chip" data-level-filter="A1">A1</button>
+          <button class="filter-chip" data-level-filter="A2">A2</button>
+          <button class="filter-chip" data-level-filter="B1">B1</button>
+          <button class="filter-chip" data-level-filter="B2">B2</button>
+          <button class="filter-chip" data-level-filter="C1">C1</button>
+          <button class="filter-chip" data-level-filter="C2">C2</button>
+        </div>
+      </div>
+
+      <% if (!stories.length) { %>
+        <div class="empty-state">
+          <div class="empty-icon">📚</div>
+          <h3>Noch keine Geschichten</h3>
+          <p>Sobald die erste Geschichte ver&ouml;ffentlicht ist, erscheint sie hier.</p>
+        </div>
+      <% } else { %>
+        <div class="story-grid" id="story-grid">
+          <% stories.forEach((story) => { %>
+            <article class="story-card" data-level="<%= story.level %>">
+              <header class="story-card-header">
+                <span class="level-badge level-<%= story.level.toLowerCase() %>"><%= story.level %></span>
+                <% if (story.created_at) { %>
+                  <time datetime="<%= story.created_at %>"><%= story.created_at %></time>
+                <% } %>
+              </header>
+              <h3 class="story-card-title"><%= story.title %></h3>
+              <p class="story-card-summary"><%= story.summary %></p>
+              <div class="story-card-footer">
+                <span class="story-card-readtime">Lesedauer: ~5 Min</span>
+                <a href="/story/<%= story.id %>" class="button button-secondary">Lesen</a>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+<script src="/js/home.js" defer></script>

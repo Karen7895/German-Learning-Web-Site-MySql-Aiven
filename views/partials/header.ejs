@@ -1,0 +1,36 @@
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <a href="/" class="brand">
+        <span class="brand-mark">DL</span>
+        <span class="brand-copy">
+          <strong>Deutsch Leseecke</strong>
+          <small>Deine Bibliothek f&uuml;r Kurzgeschichten</small>
+        </span>
+      </a>
+
+      <nav class="main-nav">
+        <a href="/" class="nav-link">Bibliothek</a>
+        <a href="/about" class="nav-link">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <% if (isAdmin) { %>
+          <a href="/stories/new" class="button button-secondary nav-action">Neue Geschichte</a>
+        <% } %>
+
+        <% if (currentUser) { %>
+          <div class="nav-user">
+            <span class="nav-user-email"><%= currentUser.email %></span>
+            <form method="post" action="/logout" class="logout-form">
+              <button type="submit" class="nav-button">Logout</button>
+            </form>
+          </div>
+        <% } else { %>
+          <a href="/login" class="nav-link">Login</a>
+          <a href="/signup" class="button button-primary nav-action">Sign up</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</header>

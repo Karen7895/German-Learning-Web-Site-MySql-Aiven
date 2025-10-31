@@ -1,0 +1,64 @@
+<%- include('partials/head', { pageTitle: story.title }) %>
+<%- include('partials/header') %>
+
+<main class="main-content">
+  <section class="story-hero">
+    <div class="container container-narrow">
+      <a href="/" class="back-link">
+        <span aria-hidden="true">&#8592;</span>
+        Zur&uuml;ck zur Bibliothek
+      </a>
+      <header class="story-meta">
+        <span class="level-badge level-<%= story.level.toLowerCase() %>"><%= story.level %></span>
+        <% if (story.created_at) { %>
+          <time datetime="<%= story.created_at %>">Ver&ouml;ffentlicht am <%= story.created_at %></time>
+        <% } %>
+      </header>
+      <h1 class="story-title"><%= story.title %></h1>
+      <p class="story-summary"><%= story.summary %></p>
+    </div>
+  </section>
+
+  <article class="story-detail">
+    <div class="container container-narrow">
+      <div class="story-body">
+        <% story.body.split('\n\n').forEach((paragraph) => { %>
+          <% if (paragraph.trim().length) { %>
+            <p><%= paragraph %></p>
+          <% } %>
+        <% }) %>
+      </div>
+
+      <aside class="story-note">
+        <h2>Lesetipp</h2>
+        <p>
+          Lies den Text laut, markiere neue Vokabeln und schreibe zwei eigene S&auml;tze mit den neuen W&ouml;rtern.
+        </p>
+      </aside>
+
+      <nav class="story-navigation">
+        <% if (prevStory) { %>
+          <a href="/story/<%= prevStory.id %>" class="nav-button nav-prev">
+            <span aria-hidden="true">&#8592;</span>
+            <span>
+              <small>Vorherige Geschichte</small>
+              <strong><%= prevStory.title %></strong>
+            </span>
+          </a>
+        <% } %>
+
+        <% if (nextStory) { %>
+          <a href="/story/<%= nextStory.id %>" class="nav-button nav-next">
+            <span>
+              <small>N&auml;chste Geschichte</small>
+              <strong><%= nextStory.title %></strong>
+            </span>
+            <span aria-hidden="true">&#8594;</span>
+          </a>
+        <% } %>
+      </nav>
+    </div>
+  </article>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,76 @@
+<%- include('../partials/head', { pageTitle: 'Neue Geschichte' }) %>
+<%- include('../partials/header') %>
+
+<main class="main-content">
+  <section class="page-hero">
+    <div class="container container-narrow">
+      <span class="eyebrow">Redaktion</span>
+      <h1>Neue Geschichte erstellen</h1>
+      <p>Ver&ouml;ffentliche frische Inhalte f&uuml;r die Community. Alle Felder werden direkt in der Datenbank gespeichert.</p>
+    </div>
+  </section>
+
+  <section class="form-section">
+    <div class="container container-narrow">
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form method="post" action="/stories" class="form-card">
+        <div class="form-field">
+          <label for="title" class="form-label">Titel</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-input"
+            value="<%= values.title %>"
+            required
+          />
+        </div>
+
+        <div class="form-field">
+          <label for="level" class="form-label">Niveau</label>
+          <select id="level" name="level" class="form-select" required>
+            <% ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].forEach(function(levelOption) { %>
+              <option value="<%= levelOption %>" <%= values.level === levelOption ? 'selected' : '' %>><%= levelOption %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="summary" class="form-label">Zusammenfassung</label>
+          <input
+            type="text"
+            id="summary"
+            name="summary"
+            class="form-input"
+            value="<%= values.summary %>"
+            maxlength="240"
+            required
+          />
+          <p class="help-text">Fasse die Geschichte in einem Satz zusammen (max. 240 Zeichen).</p>
+        </div>
+
+        <div class="form-field">
+          <label for="body" class="form-label">Volltext</label>
+          <textarea
+            id="body"
+            name="body"
+            class="form-textarea"
+            rows="14"
+            required
+          ><%= values.body %></textarea>
+          <p class="help-text">Nutze Absatzumbr&uuml;che f&uuml;r neue Abschnitte. Formatierung erfolgt automatisch.</p>
+        </div>
+
+        <div class="form-actions">
+          <a href="/" class="button button-ghost">Abbrechen</a>
+          <button type="submit" class="button button-primary">Ver&ouml;ffentlichen</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>

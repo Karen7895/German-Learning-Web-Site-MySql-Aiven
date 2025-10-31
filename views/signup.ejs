@@ -1,0 +1,61 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+
+<main class="main-content">
+  <section class="auth-section">
+    <div class="container auth-container">
+      <h2 class="section-title">Create an account</h2>
+
+      <% if (error) { %>
+        <div class="alert alert-error"><%= error %></div>
+      <% } %>
+
+      <form method="post" action="/signup" class="auth-form">
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            value="<%= values.email %>"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-input"
+            minlength="8"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-input"
+            minlength="8"
+            required
+          />
+        </div>
+
+        <button type="submit" class="button button-primary">Sign up</button>
+      </form>
+
+      <p class="auth-switch">
+        Already registered?
+        <a href="/login" class="nav-link">Log in</a>
+      </p>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
